@@ -7,14 +7,14 @@ module.exports = (io) => {
 
   router.get('/moments', (req, res, next) => {
 
-    Moment.getByMomentId()
-      .then((messages) => {
+    Moment.getAll()
+      .then((moments) => {
 
         // no data
-        if(!messages) res.sendStatus(204);
+        if(!moments) res.sendStatus(204);
 
         // success
-        res.json({messages});
+        res.json({moments});
 
       })
       .catch(err => res.sendStatus(500)); // error
