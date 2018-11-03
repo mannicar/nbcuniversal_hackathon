@@ -20,15 +20,17 @@ class Chat{
         
     }
 
-    static async add(message){
+    static async add(user, momemntId, message){
+
+        const msg = {
+            user,
+            momemntId,
+            message
+        }
 
         try {
-            const newDocument = new newMessageModel(message);
-
-            const result = await newDocument.save();
-
-            return result;
-
+            const newDocument = new MessageModel(msg);
+            return newDocument.save();
         } catch (error) {
             console.log(error);
         }
@@ -36,4 +38,4 @@ class Chat{
     }
 }
 
-module.exports = Moment;
+module.exports = Chat;

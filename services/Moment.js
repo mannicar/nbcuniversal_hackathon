@@ -20,18 +20,20 @@ class Moment{
         
     }
 
-    static async create(moment){
+    static async add(name, category, tsFrom, tsTo){
+
+        const moment = {
+            name,
+            category,
+            timeRange: {
+                from: new Date(tsFrom),
+                to: new Date(tsTo)
+            }
+        };
 
         try {
-            //Get from db
-            const moments = await MomentModel.find({});
-
-            if(!moments)
-                return null; //We did not anything
-            
-            //send back result
-            return moments;
-
+            const newDocument = new MomentModel(moment);
+            return newDocument.save();
         } catch (error) {
             console.log(error);
         }

@@ -4,10 +4,7 @@ const Schema = mongoose.Schema;
 const MessageSchema = new Schema({
     user: String,
     momentId: String,
-    timeRange: {
-        from: String,
-        to: String
-    }
+    message: String
 },{ timestamps: { createdAt: 'created_at' } }
 );
 

@@ -19,6 +19,22 @@ module.exports = (io) => {
       })
       .catch(err => res.sendStatus(500)); // error
   });
+
+  router.post('/moment', (req, res, next) => {
+    const name = req.body.name;
+    const category = req.body.category;
+    const tsFrom = req.body.tsFrom;
+    const tsTo = req.body.tsTo;
+
+    Moment.add(name, category, tsFrom, tsTo)
+      .then((result) => {
+
+        // success
+        res.json({result});
+
+      })
+      .catch(err => res.sendStatus(500)); // error
+  });
   
   return router;
 }

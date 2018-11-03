@@ -5,9 +5,10 @@ const Chat = require('../services/Chat.js');
 
 module.exports = (io) => {
 
-  router.get('/:momentId', (req, res, next) => {
+  router.get('/messages/:momentId', (req, res, next) => {
+    const id = req.params.momentId
 
-    Chat.getByMomentId()
+    Chat.getByMomentId(id)
       .then((messages) => {
 
         // no data

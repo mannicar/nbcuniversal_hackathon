@@ -56,6 +56,8 @@ const index = require('./routes/index');
 app.use('/', index);
 const moment = require('./routes/moment')(io);
 app.use('/', moment);
+const chat = require('./routes/chat')(io);
+app.use('/', chat);
 
 
 // catch 404 and forward to error handler

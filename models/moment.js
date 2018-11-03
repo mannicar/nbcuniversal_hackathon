@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const MomentShema = new Schema({
+    name: String,
     category: String,
     timeRange: {
-        from: String,
-        to: String
+        from: Date,
+        to: Date
     }
 },{ timestamps: { createdAt: 'created_at' } }
 );
