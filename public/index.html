@@ -31,7 +31,8 @@
     let moments = [];
     let messages = [];
     function onLoad() {
-        $.get("http://a7b61c0e.ngrok.io/moments", function(data, status){
+        //$.get("http://a7b61c0e.ngrok.io/moments", function(data, status){
+        $.get("http://localhost:3000/moments", function(data, status){
             moments = data.moments;
             
             
@@ -46,7 +47,8 @@
         });
     }
     function onLoadMessages (id){
-        $.get(`http://a7b61c0e.ngrok.io/messages/${id}`, function(data, status){
+        //$.get(`http://a7b61c0e.ngrok.io/messages/${id}`, function(data, status){
+        $.get(`http://localhost:3000/messages/${id}`, function(data, status){
             messages = data.messages;
             
             const messagesHtml = messages.map(message => {

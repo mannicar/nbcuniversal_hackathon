@@ -21,17 +21,25 @@ app.use(cors());
 
 //Setup socket IO
 
-const server = http.createServer(app);
-const io = socketIO(server);
+app.server = http.createServer(app);
+const io = socketIO(app.server);
 io.set('origins', '*:*');
 
 io.on('connection', socket => {
-	console.log('Socket.io: connected')
+  console.log('Socket.io: connected');
+  
+  socket.emit('new_connect', () =>{
+    console.log('TBD: Database should send old messages related to moment to new connection.');
+  });
+
+  socket.on('message', () => {
+    console.log('A message was sent by subscriber')
+  });
 
 	socket.on('disconnect', () => {
 		console.log('Socket.io: disconnected')
-	})
-})
+	});
+});
 
 // connect to db
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
