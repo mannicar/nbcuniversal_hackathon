@@ -2,7 +2,6 @@ const MomentModel = require('../models/moment');
 
 class Moment{
 
-    //Get User by subjectId:
     static async getAll(){
 
         try {
@@ -21,23 +20,23 @@ class Moment{
         
     }
 
-    // static async create(moment){
+    static async create(moment){
 
-    //     try {
-    //         //Get from db
-    //         const moments = await MomentModel.find({});
+        try {
+            //Get from db
+            const moments = await MomentModel.find({});
 
-    //         if(!moments)
-    //             return null; //We did not anything
+            if(!moments)
+                return null; //We did not anything
             
-    //         //send back result
-    //         return moments;
+            //send back result
+            return moments;
 
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
+        } catch (error) {
+            console.log(error);
+        }
         
-    // }
+    }
 }
 
 module.exports = Moment;
