@@ -6,11 +6,35 @@ const cookieParser = require('cookie-parser');
 const bodyParser   = require('body-parser');
 const layouts      = require('express-ejs-layouts');
 const mongoose     = require('mongoose');
-
-const mongodbUri = 'mongodb://localhost/nbcuniversal-hackaton';
-mongoose.connect(mongodbUri, { useNewUrlParser: true });
+const http         = require('http');
+const socketIO 	   = require('socket.io');
 
 const app = express();
+
+// environment variables
+const dotenv = require('dotenv');
+dotenv.config();
+
+// set up cors
+const cors = require('cors');
+app.use(cors());
+
+//Setup socket IO
+
+const server = http.createServer(app);
+const io = socketIO(server);
+io.set('origins', '*:*');
+
+io.on('connection', socket => {
+	console.log('Socket.io: connected')
+
+	socket.on('disconnect', () => {
+		console.log('Socket.io: disconnected')
+	})
+})
+
+// connect to db
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,6 +54,9 @@ app.use(layouts);
 
 const index = require('./routes/index');
 app.use('/', index);
+const moment = require('./routes/moment')(io);
+app.use('/', moment);
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
