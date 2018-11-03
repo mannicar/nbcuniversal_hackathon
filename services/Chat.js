@@ -1,18 +1,18 @@
-const MessageModel = require('../models/message');
+const ChatModel = require('../models/chat');
 
 class Chat{
 
-    static async getByMomentId(momemntId){
+    static async getAll(){
 
         try {
             //Get from db
-            const messages = await MessageModel.find({momemntId: momemntId});
+            const chats = await ChatModel.find({});
 
-            if(!messages)
+            if(!chats)
                 return null; //We did not anything
             
             //send back result
-            return messages;
+            return chats;
 
         } catch (error) {
             console.log(error);
@@ -20,16 +20,17 @@ class Chat{
         
     }
 
-    static async add(user, momemntId, message){
+    static async add(name, category, startTime, duration){
 
-        const msg = {
-            user,
-            momemntId,
-            message
-        }
+        const chat = {
+            name,
+            category,
+            startTime,
+            duration
+        };
 
         try {
-            const newDocument = new MessageModel(msg);
+            const newDocument = new ChatModel(chat);
             return newDocument.save();
         } catch (error) {
             console.log(error);

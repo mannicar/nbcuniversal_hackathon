@@ -28,27 +28,31 @@
 
 
 <script>
-    let moments = [];
+    let chats = [];
     let messages = [];
     function onLoad() {
-        //$.get("http://a7b61c0e.ngrok.io/moments", function(data, status){
-        $.get("http://localhost:3000/moments", function(data, status){
-            moments = data.moments;
+        //$.get("http://a7b61c0e.ngrok.io/chats", function(data, status){
+        $.get("http://localhost:3000/chats", function(data, status){
+            chats = data.chats;
             
             
-            const momentsHtml = moments.map(moment => {
+            const chatsHtml = chats.map(chat => {
                 return `<div>
-                    <button onclick='onLoadMessages("${moment._id}")'>
-                        ${moment.name}
+                    <button onclick='onLoadMessages("${chat._id}")'>
+                        OPEN
                     </button>
+                    Name: <b>${chat.name}</b>
+                    Category: <b>${chat.category}</b>
+                    startTime: <b>${chat.startTime}</b>
+                    duration: <b>${chat.duration}</b>
                     </div>`
             }).join('');
-            document.getElementById('moments').innerHTML = momentsHtml
+            document.getElementById('chats').innerHTML = chatsHtml
         });
     }
     function onLoadMessages (id){
         //$.get(`http://a7b61c0e.ngrok.io/messages/${id}`, function(data, status){
-        $.get(`http://localhost:3000/messages/${id}`, function(data, status){
+        $.get(`http://localhost:3000/${id}/messages`, function(data, status){
             messages = data.messages;
             
             const messagesHtml = messages.map(message => {
@@ -59,7 +63,7 @@
                         ${message.message}
                     </div>`
             }).join('');
-            document.getElementById('momentId').innerHTML = id
+            document.getElementById('chatId').innerHTML = id
             document.getElementById('chat').innerHTML = messagesHtml
         });
     }
@@ -67,16 +71,16 @@
 
 
 <h2>
-    All moments
+    All chats
     <button onclick='onLoad()'>LOAD</button>
 </h2>
-<ul id='moments'>
+<ul id='chats'>
 
 </ul>
 
 <h2>
-    Current moment/chat 
-    (<span id='momentId'></span>)
+    Current chat 
+    (<span id='chatId'></span>)
 </h2>
 
 <div id='chat'>

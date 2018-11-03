@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const MessageSchema = new Schema({
     user: String,
-    momentId: String,
+    chatId: String,
     message: String
 },{ timestamps: { createdAt: 'created_at' } }
 );
