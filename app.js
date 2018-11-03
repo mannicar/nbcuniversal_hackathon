@@ -27,24 +27,15 @@ io.set('origins', '*:*');
 
 console.log('BEGIN CONNECTION')
 io.on('connection', socket => {
-  console.log(1)
   console.log('Socket.io: connected');
-  console.log(2)
   socket.emit('new_connect', {history:'so juicy'});
-  console.log(5)
   socket.on('message', () => {
-    console.log(6)
     console.log('A message was sent by subscriber')
-    console.log(7)
   });
 
-  console.log(8)
 	socket.on('disconnect', () => {
-    console.log(9)
     console.log('Socket.io: disconnected')
-    console.log(10)
   });
-  console.log(11)
 });
 
 // connect to db
