@@ -29,8 +29,9 @@ console.log('BEGIN CONNECTION')
 io.on('connection', socket => {
   console.log('Socket.io: connected');
   socket.emit('new_connect', {history:'so juicy'});
-  socket.on('message', () => {
+  socket.on('message', (data) => {
     console.log('A message was sent by subscriber')
+    console.log(data);
   });
 
 	socket.on('disconnect', () => {
