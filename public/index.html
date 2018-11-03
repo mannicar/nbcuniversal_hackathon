@@ -10,10 +10,15 @@
     let messages = [];
     var socket = io.connect('http://localhost:3000');
     socket.on('new_connect', (data)=>{console.log('HUZZAH!'); console.log(data)});
+    socket.on('new_message', (data)=>{
+        console.log('New message!'); 
+        console.log(data);
+        addMsg(data)
+    })
+
     function onLoad() {
         $.get("http://localhost:3000/chats", function(data, status){
             chats = data.chats;
-            
             
             const chatsHtml = chats.map(chat => {
                 return `<div>
@@ -35,9 +40,9 @@
             
             const messagesHtml = messages.map(message => {
                 return `<div>
-                    <h4'>
-                        ${message.user}
-                    </h4>
+                    <b>
+                        ${message.user}:
+                    </b>
                         ${message.message}
                     </div>`
             }).join('');
@@ -45,14 +50,22 @@
             document.getElementById('chat').innerHTML = messagesHtml
         });
     }
+    function addMsg(message){
+        document.getElementById('chat').innerHTML += `<div>
+                    <b>
+                        ${message.user}:
+                    </b>
+                        ${message.message}
+                    </div>`;
+    }
     function onSend(){
         var id = document.getElementById('chatId').innerHTML
         var msg = document.getElementById('messageToSend').value
+        var user = document.getElementById('userName').value
+        document.getElementById('messageToSend').value = ''
 
-        socket.emit('message', {user:null, chatId:id, message:msg});
-        const messageToSend = document.getElementById('messageToSend').value;
-        document.getElementById('messageToSend').value = '';
-        console.log(messageToSend)
+        socket.emit('message', {user:user, chatId:id, message:msg});
+        
     }
  
 </script>
@@ -75,5 +88,6 @@
 
     
 </div>
-<input id='messageToSend' type="text">
+Name: <input id='userName' type="text">
+Message: <input id='messageToSend' type="text">
 <button onclick='onSend()'>SEND</button>

@@ -25,6 +25,8 @@ app.server = http.createServer(app);
 const io = socketIO(app.server);
 io.set('origins', '*:*');
 
+const Message = require('./services/Message.js');
+
 console.log('BEGIN CONNECTION')
 io.on('connection', socket => {
   console.log('Socket.io: connected');
@@ -32,6 +34,12 @@ io.on('connection', socket => {
   socket.on('message', (data) => {
     console.log('A message was sent by subscriber')
     console.log(data);
+
+    Message.add(data.user, data.chatId, data.message).then( success => {
+      console.log('Message saved');
+
+      socket.emit('new_message', data)
+    })
   });
 
 	socket.on('disconnect', () => {
