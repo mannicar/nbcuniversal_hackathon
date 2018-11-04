@@ -31,14 +31,13 @@ console.log('BEGIN CONNECTION')
 io.on('connection', socket => {
   console.log('Socket.io: connected');
   socket.emit('new_connect', {history:'so juicy'});
-  socket.on('message', (data) => {
+  socket.on('new_message', (data) => {
     console.log('A message was sent by subscriber')
     console.log(data);
 
+    io.sockets.emit('new_message', data)
     Message.add(data.user, data.chatId, data.message).then( success => {
       console.log('Message saved');
-
-      socket.emit('new_message', data)
     })
   });
 

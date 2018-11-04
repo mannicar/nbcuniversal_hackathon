@@ -8,7 +8,7 @@
 <script>
     let chats = [];
     let messages = [];
-    var socket = io.connect('http://localhost:3000');
+    var socket = io.connect('https://f921a64e.ngrok.io');
     socket.on('new_connect', (data)=>{console.log('HUZZAH!'); console.log(data)});
     socket.on('new_message', (data)=>{
         console.log('New message!'); 
@@ -17,7 +17,7 @@
     })
 
     function onLoad() {
-        $.get("http://localhost:3000/chats", function(data, status){
+        $.get("https://f921a64e.ngrok.io/chats", function(data, status){
             chats = data.chats;
             
             const chatsHtml = chats.map(chat => {
@@ -35,7 +35,7 @@
         });
     }
     function onLoadMessages (id){
-        $.get(`http://localhost:3000/${id}/messages`, function(data, status){
+        $.get(`https://f921a64e.ngrok.io/${id}/messages`, function(data, status){
             messages = data.messages;
             
             const messagesHtml = messages.map(message => {
@@ -64,7 +64,7 @@
         var user = document.getElementById('userName').value
         document.getElementById('messageToSend').value = ''
 
-        socket.emit('message', {user:user, chatId:id, message:msg});
+        socket.emit('new_message', {user:user, chatId:id, message:msg});
         
     }
  
